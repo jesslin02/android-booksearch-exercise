@@ -1,18 +1,23 @@
 package com.codepath.android.booksearch.activities;
 
 import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.android.booksearch.R;
+import com.codepath.android.booksearch.models.Book;
 
 public class BookDetailActivity extends AppCompatActivity {
     private ImageView ivBookCover;
     private TextView tvTitle;
     private TextView tvAuthor;
+    private TextView tvToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +27,21 @@ public class BookDetailActivity extends AppCompatActivity {
         ivBookCover = (ImageView) findViewById(R.id.ivBookCover);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
+        tvToolbar = findViewById(R.id.toolbar_title);
 
         // Extract book object from intent extras
+        Book book = getIntent().getParcelableExtra(Book.class.getSimpleName());
 
         // Use book object to populate data into views
+        tvTitle.setText(book.getTitle());
+        tvAuthor.setText(book.getAuthor());
+        Glide.with(this)
+                .load(book.getCoverUrl())
+                .into(ivBookCover);
+
+        tvToolbar.setText(book.getTitle());
+
+
     }
 
 
